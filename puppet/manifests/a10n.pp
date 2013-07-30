@@ -27,6 +27,7 @@ class webapp::a10n {
          'httpd',
          'rabbitmq-server',
          'mysql-server',
+         'mysql-devel',
          'python-virtualenv',
         ]:
         ensure => latest;
