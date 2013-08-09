@@ -9,6 +9,9 @@ class webapp::a10n {
 
         '/home/vagrant/.hgrc':
             source => '/vagrant/puppet/files/dot.hgrc';
+
+        '/src/l10n/a10n/a10n/settings/local.py':
+            source => '/vagrant/puppet/files/local.py';
     }
 
     service {
