@@ -2,8 +2,6 @@
 
 class webapp::a10n {
 
-    include epel
-
     file {
         '/etc/httpd/conf.d/welcome.conf':
             ensure => absent,
@@ -29,6 +27,7 @@ class webapp::a10n {
          'mysql-server',
          'mysql-devel',
          'python-virtualenv',
+         'supervisor',
         ]:
         ensure => latest;
     }

@@ -7,7 +7,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder ".", "/home/vagrant/src/a10n", :nfs => false
   config.vm.synced_folder "../elmo", "/home/vagrant/src/elmo", :nfs => false
-  config.vm.network :private_network, ip: "192.168.33.10"
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet/manifests"
