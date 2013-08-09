@@ -6,12 +6,19 @@ class webapp::a10n {
         '/etc/supervisord.conf':
             source => '/vagrant/puppet/files/supervisord.conf',
             notify => Service[supervisord];
+
+        '/home/vagrant/.hgrc':
+            source => '/vagrant/puppet/files/dot.hgrc';
     }
 
     service {
         'supervisord':
             ensure => running,
             require => Package['supervisor'];
+
+        'rabbitmq-server':
+            ensure => running,
+            require => Package['rabbitmq-server'];
     }
 
     user {
