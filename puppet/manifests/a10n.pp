@@ -5,11 +5,11 @@ class webapp::a10n {
     file {
         '/etc/supervisord.conf':
             source => '/vagrant/puppet/files/supervisord.conf',
-            notify => Service[supervisor];
+            notify => Service[supervisord];
     }
 
     service {
-        'supervisor':
+        'supervisord':
             ensure => running,
             require => Package['supervisor'];
     }
