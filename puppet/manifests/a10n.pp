@@ -29,7 +29,6 @@ class webapp::a10n {
 
     package {
         [
-         'httpd',
          'rabbitmq-server',
          'mysql-server',
          'mysql-devel',
