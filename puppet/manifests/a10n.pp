@@ -3,15 +3,15 @@
 class webapp::a10n {
 
     file {
-        '/etc/httpd/conf.d/welcome.conf':
-            ensure => absent,
-            notify => Service[httpd];
+        '/etc/supervisord.conf':
+            source => '/vagrant/puppet/files/supervisord.conf',
+            notify => Service[supervisor];
     }
 
     service {
-        'httpd':
+        'supervisor':
             ensure => running,
-            require => Package['httpd'];
+            require => Package['supervisor'];
     }
 
     user {

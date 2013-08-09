@@ -5,8 +5,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos-64-x64-vbox4210.box"
   config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
 
-  config.vm.synced_folder ".", "/home/vagrant/src/a10n", :nfs => false
-  config.vm.synced_folder "../elmo", "/home/vagrant/src/elmo", :nfs => false
+  config.vm.synced_folder ".", "/src/l10n/a10n", :nfs => false
+  config.vm.synced_folder "../elmo", "/src/l10n/elmo", :nfs => false
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet/manifests"
