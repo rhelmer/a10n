@@ -3,14 +3,14 @@ from base import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/my/home/a10n/a10n/settings/db.sql',
+        'NAME': '/src/l10n/a10n/a10n/settings/db.sql',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
         'PORT': ''
     },
 }
-REPOSITORY_BASE = '/my/home/stage/repos/'
+REPOSITORY_BASE = '/home/vagrant/stage/repos/'
 
 TRANSPORT = 'amqp://guest:guest@localhost:5672//'
 
