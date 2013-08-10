@@ -37,6 +37,9 @@ class webapp::a10n {
          'mysql-devel',
          'python-virtualenv',
          'supervisor',
+         # the following are for elmo
+         'libxslt-devel',
+         'libxml2-devel',
         ]:
         ensure => latest;
     }
