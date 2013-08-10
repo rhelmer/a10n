@@ -22,6 +22,10 @@ class webapp::a10n {
         'rabbitmq-server':
             ensure => running,
             require => Package['rabbitmq-server'];
+
+        'mysqld':
+            ensure => running,
+            require => Package['mysql-server'];
     }
 
     user {
@@ -33,13 +37,13 @@ class webapp::a10n {
     package {
         [
          'rabbitmq-server',
-         'mysql-server',
-         'mysql-devel',
          'python-virtualenv',
          'supervisor',
+         'mysql-server',
          # the following are for elmo
          'libxslt-devel',
          'libxml2-devel',
+         'mysql-devel',
         ]:
         ensure => latest;
     }
