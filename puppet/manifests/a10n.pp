@@ -34,12 +34,26 @@ class webapp::a10n {
         system => true;
     }
 
+    yumrepo {
+        'EPEL':
+            baseurl => 'http://download.fedoraproject.org/pub/epel/6/$basearch',
+            descr => 'EPEL',
+            enabled => 1,
+            gpgcheck => 0;
+    }
     package {
         [
-         'rabbitmq-server',
          'python-virtualenv',
          'supervisor',
+         'rabbitmq-server',
+        ]:
+        ensure => latest,
+        require => Yumrepo['EPEL'];
+    }
+    package {
+        [
          'mysql-server',
+         'mercurial',
          # the following are for elmo
          'libxslt-devel',
          'libxml2-devel',
