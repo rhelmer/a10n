@@ -52,9 +52,15 @@ class webapp::a10n {
     }
     package {
         [
-         'mysql-server',
+         'git',
+         'mysql',
+         'mysql-devel',
          'mercurial',
+         'pip',
+         'python-setuptools',
+         'python-devel',
          # the following are for elmo
+         'mysql-server',
          'libxslt-devel',
          'libxml2-devel',
          'mysql-devel',
