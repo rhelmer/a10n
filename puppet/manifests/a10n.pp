@@ -13,7 +13,11 @@ class webapp::a10n {
         '/data/src/a10n/a10n/settings/local.py':
             source => '/vagrant/puppet/files/local.py';
 
-        '/var/log/l10n':
+        '/var/log/a10n':
+            ensure => 'directory',
+            owner => 'vagrant';
+
+        '/var/run/a10n':
             ensure => 'directory',
             owner => 'vagrant';
     }
