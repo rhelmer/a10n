@@ -12,6 +12,10 @@ class webapp::a10n {
 
         '/data/src/a10n/a10n/settings/local.py':
             source => '/vagrant/puppet/files/local.py';
+
+        '/var/log/l10n':
+            ensure => 'directory',
+            owner => 'vagrant';
     }
 
     service {
@@ -63,7 +67,6 @@ class webapp::a10n {
          'mysql-server',
          'libxslt-devel',
          'libxml2-devel',
-         'mysql-devel',
         ]:
         ensure => latest;
     }
