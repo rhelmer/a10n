@@ -18,7 +18,7 @@ DATABASES = {
     },
 }
 
-REPOSITORY_BASE = '/data/l10n/stage/stage/repos'
+REPOSITORY_BASE = '/data/www/a10n.mozilla.org/space'
 
 TRANSPORT = 'amqp://guest:guest@localhost:5672//'
 

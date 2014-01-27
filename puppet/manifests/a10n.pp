@@ -10,7 +10,15 @@ class webapp::a10n {
         '/home/vagrant/.hgrc':
             source => '/vagrant/puppet/files/dot.hgrc';
 
-        '/data/src/a10n/a10n/settings/local.py':
+        '/data/www/a10n.mozilla.org/src':
+            ensure => 'directory',
+            owner => 'vagrant';
+
+        '/data/www/a10n.mozilla.org/space':
+            ensure => 'directory',
+            owner => 'vagrant';
+
+        '/data/www/a10n.mozilla.org/src/a10n/settings/local.py':
             source => '/vagrant/puppet/files/local.py';
 
         '/var/log/a10n':
