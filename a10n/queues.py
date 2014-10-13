@@ -6,3 +6,11 @@ from kombu import Exchange, Queue
 
 hg_exchange = Exchange('hg', type='direct')
 hg_queues = [Queue('hg', hg_exchange, routing_key='hg')]
+
+scheduler_exchange = Exchange('scheduler', type='direct')
+scheduler_queues = [Queue('scheduler', scheduler_exchange,
+                          routing_key='scheduler')]
+
+compare_exchange = Exchange('compare', type='direct')
+compare_queues = [Queue('compare', compare_exchange,
+                        routing_key='compare')]

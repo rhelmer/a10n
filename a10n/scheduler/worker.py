@@ -4,17 +4,15 @@
 
 from __future__ import with_statement
 import time
-import logging
 
 from kombu import Connection
 from kombu.mixins import ConsumerMixin
+from kombu.log import setup_logging
 
-from a10n.queues import hg_queues, scheduler_queues
+from a10n.queues import compare_queues, scheduler_queues
 
-from pushes.utils import handlePushes, PushJS
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
-logger = logging.getLogger()
+logger = setup_logging('INFO')
+#logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
 class Worker(ConsumerMixin):
 
@@ -28,19 +26,17 @@ class Worker(ConsumerMixin):
             self.sentry = Client(**settings.RAVEN_CONFIG)
 
     def get_consumers(self, Consumer, channel):
-        return [Consumer(queues=hg_queues,
+        return [Consumer(queues=scheduler_queues,
                          callbacks=[self.process_pushes,
                                     self.process_repo,
                                     self.push_compare])]
 
     def process_pushes(self, body, message):
-        if body.get('type') != 'hg-push':
+        if body.get('type') != 'scheduler':
             return
-        logger.info('got hg-push message %r', body)
+        logger.info('got scheduler message %r', body)
         try:
-            handlePushes(body['repository_id'],
-                         [PushJS(p['id'], p) for p in body['pushes']],
-                         do_update=False)
+            # TODO tree config
             self.retries = 0
         except KeyboardInterrupt:
             raise
@@ -59,30 +55,25 @@ class Worker(ConsumerMixin):
             return
 
         try:
-            push_scheduler(body['repository_id'])
+            push_compare(body['repository_id'])
         except KeyboardInterrupt:
             raise
         except Exception:
-            logger.error('push_scheduler failed', exc_info=True)
+            logger.error('push_compare failed', exc_info=True)
             return
 
         message.ack()
 
-    def process_repo(self, body, message):
-        if body.get('type') != 'new-hg-repo':
-            return
-        logger.info('got message %r', body)
-        message.ack()
-
-    def push_scheduler(self, repository_id):
+    def push_compare(self, repository_id):
         connection = Connection(settings.TRANSPORT)
         with producers[connection].acquire(block=True) as producer:
-            maybe_declare(scheduler_exchange, producer.channel)
-            msg = {'type': 'scheduler',
+            maybe_declare(compare_exchange, producer.channel)
+            # TODO what else does compare need?
+            msg = {'type': 'compare',
                    'repository_id': repository_id}
             try:
-                producer.publish(msg, exchange=scheduler_exchange,
-                                 routing_key='scheduler')
+                producer.publish(msg, exchange=compare_exchange,
+                                 routing_key='compare')
             except KeyboardInterrupt:
                 raise
             except Exception:
